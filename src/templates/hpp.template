@@ -1,0 +1,16 @@
+@{license}
+
+#ifndef _${NS}_${FILENAME}_${HPP}
+#define _${NS}_${FILENAME}_${HPP}
+
+#include <o3d/core/InStream.h>
+#include <o3d/core/OutStream.h>
+@{includes}
+
+namespace ${ns} {
+
+@{content}
+
+} // namespace ${ns}
+
+#endif // _${NS}_${FILENAME}_${HPP}

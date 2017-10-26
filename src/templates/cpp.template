@@ -1,0 +1,9 @@
+@{license}
+
+#include "${header}.${hpp}"
+@{includes}
+
+using namespace ${ns};
+using namespace o3d;
+
+@{content}

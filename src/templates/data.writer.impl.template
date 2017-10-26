@@ -1,0 +1,11 @@
+${data}Data::~${data}Data()
+{
+
+}
+
+o3d::Bool ${data}Data::writeToFile(o3d::OutStream &os)
+{
+    @{writeToFile}
+
+    return True;
+}

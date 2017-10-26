@@ -1,0 +1,26 @@
+/**
+ * @brief ${data} data.
+ * @author ${author}
+ * @date ${yyyy}-${mm}-${dd}
+ */
+class ${data}Data ${baseclasses}
+{
+public:
+
+	${data}Data()
+	{
+        @{initializers}
+	}
+
+	virtual ~${data}Data();
+
+    @{public_members}
+
+	@{setters}
+
+    virtual o3d::Bool writeToFile(o3d::OutStream &os);
+
+private:
+
+    @{private_members}
+};

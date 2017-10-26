@@ -1,0 +1,4 @@
+void ${data}Model::postImport()
+{
+    // implement here, this file is not regenerated until it exists
+}

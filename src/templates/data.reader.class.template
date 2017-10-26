@@ -1,0 +1,28 @@
+/**
+ * @brief ${data} data.
+ * @author ${author}
+ * @date ${yyyy}-${mm}-${dd}
+ */
+class ${data}Data ${baseclasses}
+{
+public:
+
+	${data}Data()
+	{
+        @{initializers}
+	}
+
+	virtual ~${data}Data();
+
+    @{public_members}
+
+	@{getters}
+
+    virtual o3d::Bool readFromFile(o3d::InStream &is);
+
+	virtual void postImport();
+
+private:
+
+    @{private_members}
+};

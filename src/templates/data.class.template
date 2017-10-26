@@ -1,0 +1,17 @@
+/**
+ * @brief ${data} data.
+ * @author ${author}
+ * @date ${yyyy}-${mm}-${dd}
+ */
+class ${data}Data ${baseclasses}
+{
+public:
+
+    @{public_members}
+
+    virtual o3d::Bool readFromFile(o3d::InStream &is);
+
+protected:
+
+    @{private_members}
+};
