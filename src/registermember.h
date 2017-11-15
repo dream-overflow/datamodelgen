@@ -1,7 +1,7 @@
 /**
  * @file registermember.h
  * @brief 
- * @author Frederic SCHERMA (frederic.scherma@gmail.com)
+ * @author Frederic SCHERMA (frederic.scherma@dreamoverflow.org)
  * @date 2013-11-19
  * @copyright Copyright (c) 2001-2017 Dream Overflow. All rights reserved.
  * @details 
@@ -20,7 +20,7 @@ namespace dmg {
  * @brief Helper to register a member.
  * Usage: in a cpp file do RegisterMember<MemberClassName>::R inst;
  * @date 2013-11-19
- * @author Frederic SCHERMA (frederic.scherma@gmail.com)
+ * @author Frederic SCHERMA (frederic.scherma@dreamoverflow.org)
  */
 template <class T>
 struct RegisterMember
