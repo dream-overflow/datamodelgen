@@ -9,7 +9,7 @@
 
 #include <o3d/core/architecture.h>
 #include <o3d/core/main.h>
-#include <o3d/core/diskdir.h>
+#include <o3d/core/dir.h>
 #include <o3d/core/filemanager.h>
 #include <o3d/core/stringtokenizer.h>
 #include <o3d/core/smartpointer.h>
@@ -60,27 +60,27 @@ void Main::init()
     m_month = date.buildString("%M");
     m_day = date.buildString("%D");
 
-    DiskDir inPath(m_inPath);
-    if (!inPath.isExist())
+    Dir inPath(m_inPath);
+    if (!inPath.exists())
         O3D_ERROR(E_InvalidParameter("Invalid input path"));
 
     for (Int32 n = 0; n < 2; ++n)
     {
-        DiskDir displayerOutPath(m_outPath[n][DataFile::DISPLAYER]);
-        if (!displayerOutPath.isExist())
+        Dir displayerOutPath(m_outPath[n][DataFile::DISPLAYER]);
+        if (!displayerOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid displayer output path"));
 
-        DiskDir authorityOutPath(m_outPath[n][DataFile::AUTHORITY]);
-        if (!authorityOutPath.isExist())
+        Dir authorityOutPath(m_outPath[n][DataFile::AUTHORITY]);
+        if (!authorityOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid authority output path"));
 
-        DiskDir editorOutPath(m_outPath[n][DataFile::EDITOR]);
-        if (!editorOutPath.isExist())
+        Dir editorOutPath(m_outPath[n][DataFile::EDITOR]);
+        if (!editorOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid editor output path"));
     }
 
-    DiskDir tlpPath(m_tplPath);
-    if (!tlpPath.isExist())
+    Dir tlpPath(m_tplPath);
+    if (!tlpPath.exists())
          O3D_ERROR(E_InvalidParameter("Invalid template path"));
 
     System::print(String::print("%i", m_version), "Generate version");
@@ -177,7 +177,7 @@ Int32 Main::command()
         {
             String dataTo = cmd->getArgs()[2];
 
-            DiskDir source(m_inPath);
+            Dir source(m_inPath);
             if (source.check(data + ".dmg") == Dir::SUCCESS)
             {
                 renameData(
@@ -194,7 +194,7 @@ Int32 Main::command()
                 // profiles
                 for (Int32 i = 0; i < 3; ++i)
                 {
-                    DiskDir out(m_outPath[n][i]);
+                    Dir out(m_outPath[n][i]);
                     if (out.check(data + "Data." + m_hppExt) == Dir::SUCCESS)
                     {
                         renameDataHeader(
@@ -222,7 +222,7 @@ Int32 Main::command()
         // rm, remove a data from source and targets
         if (op == "rm" && data.isValid())
         {
-            DiskDir source(m_inPath);
+            Dir source(m_inPath);
             if (source.check(data + ".dmg") == Dir::SUCCESS)
                 source.removeFile(data + ".dmg");
 
@@ -232,7 +232,7 @@ Int32 Main::command()
                 // profiles
                 for (Int32 i = 0; i < 3; ++i)
                 {
-                    DiskDir out(m_outPath[n][i]);
+                    Dir out(m_outPath[n][i]);
                     if (out.check(data + "Data." + m_hppExt) == Dir::SUCCESS)
                         out.removeFile(data + "Data." + m_hppExt);
                     if (out.check(data + "Data." + m_cppExt) == Dir::SUCCESS)
@@ -337,7 +337,6 @@ Int32 Main::main()
 {
     Debug::instance()->setDefaultLog("datamodelgen.log");
     Debug::instance()->getDefaultLog().clearLog();
-    Debug::instance()->getDefaultLog().writeHeaderLog();
 
     CommandLine *cmd = Application::getCommandLine();
     if (cmd->getArgs().size() == 0)
@@ -361,8 +360,6 @@ Int32 Main::main()
 
     // Destroy any content
     deletePtr(apps);
-
-    Debug::instance()->getDefaultLog().writeFooterLog();
 
     return 0;
 }

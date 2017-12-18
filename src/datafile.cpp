@@ -9,11 +9,11 @@
 
 #include "datafile.h"
 #include "main.h"
-#include <o3d/core/diskfileinfo.h>
+#include <o3d/core/fileinfo.h>
 #include <o3d/core/filemanager.h>
 #include <o3d/core/integer.h>
 #include <o3d/core/char.h>
-#include <o3d/core/diskdir.h>
+#include <o3d/core/dir.h>
 #include <o3d/core/stringtokenizer.h>
 #include <o3d/gui/integervalidator.h>
 #include "memberfactory.h"
@@ -478,8 +478,8 @@ void DataFile::importData(const String &_line, UInt32 importLevel, Int32 pass)
             String fcn = FileManager::instance()->getFullFileName(m_filename);
 
             String ap, bp, af, bf;
-            File::getFileNameAndPath(fin, af, ap);
-            File::getFileNameAndPath(fcn, bf, bp);
+            FileManager::getFileNameAndPath(fin, af, ap);
+            FileManager::getFileNameAndPath(fcn, bf, bp);
 
             String a = ap;
             a.remove(bp);
@@ -545,7 +545,7 @@ void DataFile::importData(const String &_line, UInt32 importLevel, Int32 pass)
         else
         {
             String ap, af;
-            File::getFileNameAndPath(filename, af, ap);
+            FileManager::getFileNameAndPath(filename, af, ap);
 
             af.trimRight(".dmg");
 
@@ -931,8 +931,8 @@ void DataFile::writeDataReaderClass(const String &outPath, const String &hppExt,
     if (!something)
         return;
 
-    DiskDir dir(outPath + "/" + m_pathname);
-    if (!dir.isExist())
+    Dir dir(outPath + "/" + m_pathname);
+    if (!dir.exists())
     {
         dir.cdUp();
         dir.makeDir(m_pathname);
@@ -1040,8 +1040,8 @@ void DataFile::writeDataReaderImpl(const String &outPath, const String &cppExt, 
     if (!something)
         return;
 
-    DiskDir dir(outPath + "/" + m_pathname);
-    if (!dir.isExist())
+    Dir dir(outPath + "/" + m_pathname);
+    if (!dir.exists())
     {
         dir.cdUp();
         dir.makeDir(m_pathname);
@@ -1171,8 +1171,8 @@ void DataFile::writeDataReaderUserImpl(const String &outPath, const String &cppE
     if (!something)
         return;
 
-    DiskDir dir(outPath + "/" + m_pathname);
-    if (!dir.isExist())
+    Dir dir(outPath + "/" + m_pathname);
+    if (!dir.exists())
     {
         dir.cdUp();
         dir.makeDir(m_pathname);
@@ -1180,8 +1180,8 @@ void DataFile::writeDataReaderUserImpl(const String &outPath, const String &cppE
 
     String filename = FileManager::instance()->getFullFileName(outPath + "/" + m_pathname + "/" + m_prefix + "Data.user." + cppExt);
 
-    DiskFileInfo fileInfo(filename);
-    if (fileInfo.isExist())
+    FileInfo fileInfo(filename);
+    if (fileInfo.exists())
         return;
 
     FileOutStream *os = FileManager::instance()->openOutStream(filename, FileOutStream::CREATE);
@@ -1493,8 +1493,8 @@ void DataFile::writeDataWriterClass(const String &outPath, const String &hppExt,
     if (!something)
         return;
 
-    DiskDir dir(outPath + "/" + m_pathname);
-    if (!dir.isExist())
+    Dir dir(outPath + "/" + m_pathname);
+    if (!dir.exists())
     {
         dir.cdUp();
         dir.makeDir(m_pathname);
@@ -1600,8 +1600,8 @@ void DataFile::writeDataWriterImpl(const String &outPath, const String &cppExt, 
     if (!something)
         return;
 
-    DiskDir dir(outPath + "/" + m_pathname);
-    if (!dir.isExist())
+    Dir dir(outPath + "/" + m_pathname);
+    if (!dir.exists())
     {
         dir.cdUp();
         dir.makeDir(m_pathname);
@@ -3049,13 +3049,14 @@ void DataFile::parseDataMember(
 
     Member *member;
 
-    if (isRef)
-    {
-        if (value.isValid())
+    if (isRef) {
+        if (value.isValid()) {
             O3D_ERROR(E_InvalidOperation("a reference member cannot have an initial value"));
+        }
 
         member = MemberFactory::instance()->buildFromTypeName(type + "&", parent);
-        MemberCustomRef *memberRef = dynamic_cast<MemberCustomRef*>(member);
+        // MemberCustomRef *memberRef = dynamic_cast<MemberCustomRef*>(member);
+        MemberCustomRef *memberRef = static_cast<MemberCustomRef*>(member);
 
         // TODO identifier type may be took from referenced member class, if referencable...
         Member *identifier = MemberFactory::instance()->buildFromTypeName("int32", parent);
