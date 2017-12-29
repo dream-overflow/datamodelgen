@@ -9,7 +9,7 @@
 
 #include <o3d/core/architecture.h>
 #include <o3d/core/main.h>
-#include <o3d/core/dir.h>
+#include <o3d/core/localdir.h>
 #include <o3d/core/filemanager.h>
 #include <o3d/core/stringtokenizer.h>
 #include <o3d/core/smartpointer.h>
@@ -60,26 +60,26 @@ void Main::init()
     m_month = date.buildString("%M");
     m_day = date.buildString("%D");
 
-    Dir inPath(m_inPath);
+    LocalDir inPath(m_inPath);
     if (!inPath.exists())
         O3D_ERROR(E_InvalidParameter("Invalid input path"));
 
     for (Int32 n = 0; n < 2; ++n)
     {
-        Dir displayerOutPath(m_outPath[n][DataFile::DISPLAYER]);
+        LocalDir displayerOutPath(m_outPath[n][DataFile::DISPLAYER]);
         if (!displayerOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid displayer output path"));
 
-        Dir authorityOutPath(m_outPath[n][DataFile::AUTHORITY]);
+        LocalDir authorityOutPath(m_outPath[n][DataFile::AUTHORITY]);
         if (!authorityOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid authority output path"));
 
-        Dir editorOutPath(m_outPath[n][DataFile::EDITOR]);
+        LocalDir editorOutPath(m_outPath[n][DataFile::EDITOR]);
         if (!editorOutPath.exists())
             O3D_ERROR(E_InvalidParameter("Invalid editor output path"));
     }
 
-    Dir tlpPath(m_tplPath);
+    LocalDir tlpPath(m_tplPath);
     if (!tlpPath.exists())
          O3D_ERROR(E_InvalidParameter("Invalid template path"));
 
@@ -177,8 +177,8 @@ Int32 Main::command()
         {
             String dataTo = cmd->getArgs()[2];
 
-            Dir source(m_inPath);
-            if (source.check(data + ".dmg") == Dir::SUCCESS)
+            LocalDir source(m_inPath);
+            if (source.check(data + ".dmg") == LocalDir::SUCCESS)
             {
                 renameData(
                             source.getFullPathName() + "/" + data + ".dmg",
@@ -194,8 +194,8 @@ Int32 Main::command()
                 // profiles
                 for (Int32 i = 0; i < 3; ++i)
                 {
-                    Dir out(m_outPath[n][i]);
-                    if (out.check(data + "Data." + m_hppExt) == Dir::SUCCESS)
+                    LocalDir out(m_outPath[n][i]);
+                    if (out.check(data + "Data." + m_hppExt) == LocalDir::SUCCESS)
                     {
                         renameDataHeader(
                                     out.getFullPathName() + "/" + data + "Data." + m_hppExt,
@@ -204,7 +204,7 @@ Int32 Main::command()
                                     dataTo);
                         out.removeFile(data + "Data." + m_hppExt);
                     }
-                    if (out.check(data + "Data." + m_cppExt) == Dir::SUCCESS)
+                    if (out.check(data + "Data." + m_cppExt) == LocalDir::SUCCESS)
                     {
                         renameDataImpl(
                                     out.getFullPathName() + "/" + data + "Data." + m_cppExt,
@@ -222,8 +222,8 @@ Int32 Main::command()
         // rm, remove a data from source and targets
         if (op == "rm" && data.isValid())
         {
-            Dir source(m_inPath);
-            if (source.check(data + ".dmg") == Dir::SUCCESS)
+            LocalDir source(m_inPath);
+            if (source.check(data + ".dmg") == LocalDir::SUCCESS)
                 source.removeFile(data + ".dmg");
 
             // file type
@@ -232,12 +232,12 @@ Int32 Main::command()
                 // profiles
                 for (Int32 i = 0; i < 3; ++i)
                 {
-                    Dir out(m_outPath[n][i]);
-                    if (out.check(data + "Data." + m_hppExt) == Dir::SUCCESS)
+                    LocalDir out(m_outPath[n][i]);
+                    if (out.check(data + "Data." + m_hppExt) == LocalDir::SUCCESS)
                         out.removeFile(data + "Data." + m_hppExt);
-                    if (out.check(data + "Data." + m_cppExt) == Dir::SUCCESS)
+                    if (out.check(data + "Data." + m_cppExt) == LocalDir::SUCCESS)
                         out.removeFile(data + "Data." + m_cppExt);
-                    if (out.check(data + "Data.user." + m_cppExt) == Dir::SUCCESS)
+                    if (out.check(data + "Data.user." + m_cppExt) == LocalDir::SUCCESS)
                         out.removeFile(data + "Data.user." + m_cppExt);
                 }
             }

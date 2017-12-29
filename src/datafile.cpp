@@ -9,11 +9,11 @@
 
 #include "datafile.h"
 #include "main.h"
-#include <o3d/core/fileinfo.h>
+#include <o3d/core/localfile.h>
 #include <o3d/core/filemanager.h>
 #include <o3d/core/integer.h>
 #include <o3d/core/char.h>
-#include <o3d/core/dir.h>
+#include <o3d/core/localdir.h>
 #include <o3d/core/stringtokenizer.h>
 #include <o3d/gui/integervalidator.h>
 #include "memberfactory.h"
@@ -931,7 +931,7 @@ void DataFile::writeDataReaderClass(const String &outPath, const String &hppExt,
     if (!something)
         return;
 
-    Dir dir(outPath + "/" + m_pathname);
+    LocalDir dir(outPath + "/" + m_pathname);
     if (!dir.exists())
     {
         dir.cdUp();
@@ -1040,7 +1040,7 @@ void DataFile::writeDataReaderImpl(const String &outPath, const String &cppExt, 
     if (!something)
         return;
 
-    Dir dir(outPath + "/" + m_pathname);
+    LocalDir dir(outPath + "/" + m_pathname);
     if (!dir.exists())
     {
         dir.cdUp();
@@ -1171,7 +1171,7 @@ void DataFile::writeDataReaderUserImpl(const String &outPath, const String &cppE
     if (!something)
         return;
 
-    Dir dir(outPath + "/" + m_pathname);
+    LocalDir dir(outPath + "/" + m_pathname);
     if (!dir.exists())
     {
         dir.cdUp();
@@ -1180,7 +1180,7 @@ void DataFile::writeDataReaderUserImpl(const String &outPath, const String &cppE
 
     String filename = FileManager::instance()->getFullFileName(outPath + "/" + m_pathname + "/" + m_prefix + "Data.user." + cppExt);
 
-    FileInfo fileInfo(filename);
+    LocalFile fileInfo(filename);
     if (fileInfo.exists())
         return;
 
@@ -1493,7 +1493,7 @@ void DataFile::writeDataWriterClass(const String &outPath, const String &hppExt,
     if (!something)
         return;
 
-    Dir dir(outPath + "/" + m_pathname);
+    LocalDir dir(outPath + "/" + m_pathname);
     if (!dir.exists())
     {
         dir.cdUp();
@@ -1600,7 +1600,7 @@ void DataFile::writeDataWriterImpl(const String &outPath, const String &cppExt, 
     if (!something)
         return;
 
-    Dir dir(outPath + "/" + m_pathname);
+    LocalDir dir(outPath + "/" + m_pathname);
     if (!dir.exists())
     {
         dir.cdUp();
