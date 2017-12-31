@@ -1,3 +1,5 @@
+CMakeLists.txt
+src/CMakeLists.txt
 src/main.cpp
 src/main.h
 src/member.cpp

@@ -35,3 +35,13 @@ else()
 		target_link_libraries(${TARGET_NAME} objective3d ${OPENGL_gl_LIBRARY} o3dnet)
 	endif()
 endif()
+
+#----------------------------------------------------------
+# install
+#----------------------------------------------------------
+
+install (TARGETS ${TARGET_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    COMPONENT library)
